@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Supermarket</title>
+    <link rel="stylesheet" href="dashboard-style.css">
+</head>
+<body>
+    <div class="theme-toggle">
+    <span class="icon">🌙</span>
+    <label class="switch">
+        <input type="checkbox" id="darkToggle">
+        <span class="slider"></span>
+    </label>
+</div>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li>Dashboard</li>
+            <li>Add Product</li>
+            <li>Manage Products</li>
+            <li onclick="window.location.href='scanner.html'">Scan Product</li>
+            <li onclick="logout()" style="cursor:pointer;">Logout</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+
+        <h1>Supermarket Dashboard</h1>
+
+        <!-- Summary Cards -->
+        <div class="cards">
+            <div class="card">
+                <h3>Total Sales</h3>
+                <p>Rs.12,450</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Products</h3>
+                <p id="totalProducts">0</p>
+            </div>
+        </div>
+
+        <!-- Add Product Section -->
+        <div class="form-section">
+            <h2>Add / Edit Product</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <input type="text" id="productName" placeholder="Product Name" required>
+                <input type="number" id="productPrice" placeholder="Price" required>
+                <input type="number" id="productQuantity" placeholder="Quantity" required>
+                <button type="submit">Save Product</button>
+            </form>
+        </div>
+
+        <!-- Product Table -->
+        <div class="table-section">
+            <h2>Manage Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+<script>
+// ===== DARK MODE =====
+// ===== DARK MODE SYSTEM =====
+
+const toggle = document.getElementById("darkToggle");
+
+// Load saved preference
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    toggle.checked = true;
+}
+
+toggle.addEventListener("change", function () {
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "darkMode",
+        document.body.classList.contains("dark")
+    );
+});
+
+// ===== LOGOUT =====
+function logout() {
+    window.location.href = "login.html";
+}
+
+// ===== PRODUCT SYSTEM =====
+
+let products = JSON.parse(localStorage.getItem("products")) || [];
+let editIndex = null;
+
+const form = document.getElementById("productForm");
+const tableBody = document.getElementById("productTableBody");
+const totalProducts = document.getElementById("totalProducts");
+const totalSales = document.getElementById("totalSales");
+
+function saveProducts() {
+    localStorage.setItem("products", JSON.stringify(products));
+}
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = productName.value;
+    const price = parseFloat(productPrice.value);
+    const quantity = parseInt(productQuantity.value);
+
+    if (editIndex === null) {
+        products.push({ name, price, quantity });
+    } else {
+        products[editIndex] = { name, price, quantity };
+        editIndex = null;
+    }
+
+    saveProducts();
+    form.reset();
+    renderTable();
+});
+
+function renderTable() {
+    tableBody.innerHTML = "";
+
+    let sales = 0;
+
+    products.forEach((p, index) => {
+        sales += p.price * p.quantity;
+
+        tableBody.innerHTML += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${p.name}</td>
+            <td>Rs.${p.price}</td>
+            <td>${p.quantity}</td>
+            <td>
+                <button onclick="editProduct(${index})" class="primary-btn">Edit</button>
+                <button onclick="deleteProduct(${index})" class="delete-btn">Delete</button>
+            </td>
+        </tr>`;
+    });
+
+    totalProducts.textContent = products.length;
+    totalSales.textContent = "$" + sales.toFixed(2);
+}
+
+function deleteProduct(index) {
+    if (confirm("Are you sure?")) {
+        products.splice(index, 1);
+        saveProducts();
+        renderTable();
+    }
+}
+
+function editProduct(index) {
+    const p = products[index];
+    productName.value = p.name;
+    productPrice.value = p.price;
+    productQuantity.value = p.quantity;
+    editIndex = index;
+}
+
+// ===== SEARCH =====
+function searchProduct() {
+    const value = document.getElementById("searchInput").value.toLowerCase();
+
+    const rows = tableBody.getElementsByTagName("tr");
+
+    for (let row of rows) {
+        let name = row.cells[1].textContent.toLowerCase();
+        row.style.display = name.includes(value) ? "" : "none";
+    }
+}
+
+renderTable();
+
+</script>
+
+</body>
+</html>
