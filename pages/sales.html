@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sales.css">
+    <title>Document</title>
+</head>
+<body style="background:rgb(206, 228, 248) ;">
+    <div class="hornav">
+        <ul>
+            <li class="nam">Supermarket Billing System</li>
+            <li class="admin" style="float:right;">
+                <div class="circle"></div>
+                <select onchange="handleDropdown(this)">
+                    <option selected>Admin</option>
+                    <option value="logout">LogOut</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="vernav">
+        <ul>
+            <li><a href="#dashboard"><div class="imgcont"><img class="img1" src="../image/dash.png"><img class="img2" src="../image/dash2.png"></div>Dashboard</a></li>
+            <li><a class="active" href="#sales"><div class="imgcont"><img class="img1" src="../image/sales.png"><img class="img2" src="../image/sales1.png"></div>Sales Report</a></li>
+            <li><a href="#customer"><div class="imgcont"><img class="img1" src="../image/cust.png"><img class="img2" src="../image/cust1.png"></div>Customer</a></li>
+            <li><a href="#product"><div class="imgcont"><img class="img1" src="../image/prod.png"><img class="img2" src="../image/prod1.png"></div>Product</a></li>
+            <li><a href="#cashier"><div class="imgcont"><img class="img1" src="../image/cash.png"><img class="img2" src="../image/cash1.png"></div>Cashier Info</a></li>
+        </ul>
+    </div>
+    <div class="workspace">
+        <h2>Sales Report</h2>
+        <div class="controls">
+                <select>
+                    <option>2024</option>
+                    <option>2023</option>
+                    <option>2022</option>
+                </select>
+
+                <button>Generate Report</button>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/cart.png" alt="">
+                    <p>Total Sales</p>
+                </div>
+                <h3>Rs.40,000</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/dollar.png" alt="">
+                    <p>Total Cost</p>
+                </div>
+                <h3>Rs.32,000</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/dollar.png" alt="">
+                    <p>Total Profit</p>
+                </div>
+                <h3>Rs.8,000</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/box.png" alt="">
+                    <p>Total Product Sold</p>
+                </div>
+                <h3>472</h3>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <div class="table-header">
+                <h3>Product Sales Report</h3>
+                <input type="text" placeholder="Search product...">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Bought Quantity</th>
+                        <th>Sold Quantity</th>
+                        <th>Avg Cost Price</th>
+                        <th>Avg Selling Price</th>
+                        <th>Profit/Loss</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Apple</td>
+                        <td>123</td>
+                        <td>120</td>
+                        <td>Rs.45</td>
+                        <td>Rs.50</td>
+                        <td class="profit">+Rs.465</td>
+                    </tr>
+
+                    <tr>
+                        <td>Milk</td>
+                        <td>124</td>
+                        <td>123</td>
+                        <td>Rs.47</td>
+                        <td>Rs.50</td>
+                        <td class="profit">+Rs.322</td>
+                    </tr>
+
+                    <tr>
+                        <td>Bread</td>
+                        <td>125</td>
+                        <td>120</td>
+                        <td>Rs.21</td>
+                        <td>Rs.25</td>
+                        <td class="profit">+Rs.375</td>
+                    </tr>
+
+                    <tr>
+                        <td>Chips</td>
+                        <td>126</td>
+                        <td>120</td>
+                        <td>Rs.65</td>
+                        <td>Rs.75</td>
+                        <td class="profit">+Rs.810</td>
+                    </tr>
+
+                    <tr>
+                        <td>Drinks</td>
+                        <td>130</td>
+                        <td>126</td>
+                        <td>Rs.89</td>
+                        <td>Rs.100</td>
+                        <td class="profit">+Rs.1030</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <span>&lt;</span>
+                <span class="num">1</span>
+                <span class="num">2</span>
+                <span class="num">3</span>
+                <span>&gt;</span>
+            </div>
+        </div>
+
+        <div class="charts">
+            <div class="chart-box">Profit by Product</div>
+            <div class="chart-box">Profit Trend (yearly)</div>
+        </div>
+    </div>
+<script>
+    function handleDropdown(select) {
+        if (select.value === "logout") {
+            window.location.href = "login.html";
+        }
+    }
+    window.onload = function () {
+        document.querySelector(".admin select").selectedIndex = 0;
+    };
+</script>
+</body>
+</html>

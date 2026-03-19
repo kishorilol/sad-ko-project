@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.hornav ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #4d65de;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.hornav ul li {
+  float: left;
+}
+
+.hornav ul li{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nam{
+  font-weight: bold;
+}
+.admin{
+  font-size: small;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 100;
+  margin-right: 20px;
+}
+
+.circle {
+  width: 20px; 
+  height: 20px; 
+  background-color: #4CAF50;
+  border-radius: 50%; 
+  float: left;
+  margin-right: 4px;
+}
+
+.admin select {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.vernav ul{
+  list-style-type: none;
+  position: fixed;
+  top: 33px;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  background: #b9d4ef;
+  padding-top: 20px;
+  padding-left: 0%;
+}
+
+li{
+  padding: 12px 0px;
+  font-weight: bold;
+}
+.vernav a{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  color: rgb(121,118,118);
+  text-decoration: none;
+  position: relative;
+}
+
+/* ICON CONTAINER */
+.imgcont{
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.imgcont img{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+}
+
+/* default visible icon */
+.img1{
+  opacity: 1;
+}
+
+/* hover/active icon */
+.img2{
+  opacity: 0;
+}
+
+/* 🔥 HOVER EFFECT */
+.vernav a:hover{
+  background-color: #555555;
+  color: white;
+}
+
+.vernav a:hover .img1{
+  opacity: 0;
+}
+
+.vernav a:hover .img2{
+  opacity: 1;
+}
+
+/* 🔥 ACTIVE EFFECT */
+.vernav a.active{
+  background-color: #3c21a6;
+  color: white;
+}
+
+.vernav a.active .img1{
+  opacity: 0;
+}
+
+.vernav a.active .img2{
+  opacity: 1;
+}
+
+.workspace{
+  position: relative;
+  margin-top: 49px;
+  margin-left: 220px;
+  background: rgb(206, 228, 248);
+  z-index:0;
+}
