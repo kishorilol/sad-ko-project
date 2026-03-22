@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/product.css">
+    <title>Document</title>
+</head>
+<body style="background:rgb(206, 228, 248) ;">
+    <div class="hornav">
+        <ul>
+            <li class="nam">Supermarket Billing System</li>
+            <li class="admin" style="float:right;">
+                <div class="circle"></div>
+                <select onchange="handleDropdown(this)">
+                    <option selected>Admin</option>
+                    <option value="logout">LogOut</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="vernav">
+        <ul>
+            <li><a href="#dashboard"><div class="imgcont"><img class="img1" src="../image/dash.png"><img class="img2" src="../image/dash2.png"></div>Dashboard</a></li>
+            <li><a href="#sales"><div class="imgcont"><img class="img1" src="../image/sales.png"><img class="img2" src="../image/sales1.png"></div>Sales Report</a></li>
+            <li><a href="#customer"><div class="imgcont"><img class="img1" src="../image/cust.png"><img class="img2" src="../image/cust1.png"></div>Customer</a></li>
+            <li><a class="active" href="#product"><div class="imgcont"><img class="img1" src="../image/prod.png"><img class="img2" src="../image/prod1.png"></div>Product</a></li>
+            <li><a href="#cashier"><div class="imgcont"><img class="img1" src="../image/cash.png"><img class="img2" src="../image/cash1.png"></div>Cashier Info</a></li>
+        </ul>
+    </div>
+    <div class="workspace">
+        <h2>PRODUCT</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/box.png" alt="">
+                    <p>Total Product</p>
+                </div>
+                <h3>472</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/low.png" alt="">
+                    <p>Low Stock Product</p>
+                </div>
+                <h3>Rs.32,000</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/time.png" alt="">
+                    <p>Expiring Soon</p>
+                </div>
+                <h3>Rs.8,000</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/category.png" alt="">
+                    <p>Categories</p>
+                </div>
+                <h3>472</h3>
+            </div>
+        </div>
+        <div class="scanner">
+            <button id="scan-btn">Scan Barcode ||| |||||</button>
+            <div id="scanner-container"></div>
+        </div>
+        <div class="form">
+            <input type="text" id="id" placeholder="Id">
+            <input type="text" id="name" placeholder="Name">
+            <select id="category">
+                <option>Fruits</option>
+                <option>Dairy</option>
+                <option>Snacks</option>
+            </select>
+            <input type="text" id="barcode" placeholder="Barcode">
+            <input type="number" id="qty" placeholder="Quantity">
+            <input type="number" id="price" placeholder="Price">
+
+            <button class="scan-btn" onclick="addProduct()">Add +</button>
+        </div>
+
+        <div class="table-section">
+            <div class="table-header">
+                <h3>Products Table</h3>
+                <select id="category1">
+                    <option value="">All</option>
+                    <option value="">Fruits</option>
+                    <option value="">Dairy</option>
+                    <option value="">Snacks</option>
+                </select>
+                <input type="text" placeholder="Search product...">
+            </div>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Category</th><th>Barcode</th><th>Qty</th><th>Price</th><th>Last Updated</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="pagination">
+                <span>&lt;</span>
+                <span class="num">1</span>
+                <span class="num">2</span>
+                <span class="num">3</span>
+                <span>&gt;</span>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script>
+        const scanBtn = document.getElementById('scan-btn');
+        const scannerContainer = document.getElementById('scanner-container');
+        const barcodeInput = document.getElementById('barcode');
+
+        let isScanning = false;
+
+        scanBtn.addEventListener('click', () => {
+        if (!isScanning) {
+            startScanner();
+            scanBtn.textContent = "Stop Scanning";
+        } else {
+            stopScanner();
+            scanBtn.textContent = "Scan Barcode ||| |||||";
+        }
+        isScanning = !isScanning;
+        });
+
+        function startScanner() {
+        Quagga.init({
+            inputStream: {
+            type: "LiveStream",
+            target: scannerContainer, // camera feed goes inside blue box
+            constraints: {
+                facingMode: "environment" // back camera
+            }
+            },
+            decoder: {
+            readers: ["code_128_reader", "ean_reader", "ean_8_reader", "upc_reader", "upc_e_reader"]
+            }
+        }, (err) => {
+            if (err) {
+            console.error(err);
+            return;
+            }
+            Quagga.start();
+        });
+
+        Quagga.onDetected((data) => {
+            const code = data.codeResult.code;
+            barcodeInput.value = code;
+            stopScanner();
+            scanBtn.textContent = "📷 Scan Barcode";
+            isScanning = false;
+        });
+        }
+
+        function stopScanner() {
+        Quagga.stop();
+        }
+
+        let products = [];
+        let editIndex = -1;
+
+        function addProduct() {
+            let p = {
+            id: document.getElementById("id").value,
+            name: document.getElementById("name").value,
+            category: document.getElementById("category").value,
+            barcode: document.getElementById("barcode").value,
+            qty: document.getElementById("qty").value,
+            price: document.getElementById("price").value
+            };
+
+            if(editIndex === -1){
+            products.push(p);
+            }else{
+            products[editIndex] = p;
+            editIndex = -1;
+            }
+            render();
+            clearForm();
+        };
+
+        function render(){
+            let tbody = document.querySelector("tbody");
+            tbody.innerHTML = "";
+
+            // Get today's date once
+            let today = new Date();
+            let formattedDate = today.toLocaleDateString(); 
+            // e.g. 3/22/2026 (depends on system)
+
+            products.forEach((p,i)=>{
+                let row = `
+                <tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td>${p.category}</td>
+                <td>${p.barcode}</td>
+                <td>${p.qty}</td>
+                <td>${p.price}</td>
+                <td>${formattedDate}</td> <!-- ✅ Date added here -->
+                <td>
+                <button class='action-btn edit' onclick='editProduct(${i})'>Edit</button>
+                <button class='action-btn delete' onclick='deleteProduct(${i})'>Delete</button>
+                </td>
+                </tr>`;
+
+                tbody.innerHTML += row;
+            });
+        };
+
+        function deleteProduct(i){
+            products.splice(i,1);
+            render();
+        }
+
+        function editProduct(i){
+            let p = products[i];
+            document.getElementById("id").value = p.id;
+            document.getElementById("name").value = p.name;
+            document.getElementById("category").value = p.category;
+            document.getElementById("barcode").value = p.barcode;
+            document.getElementById("qty").value = p.qty;
+            document.getElementById("price").value = p.price;
+            editIndex = i;
+        }
+
+        function clearForm(){
+            document.querySelectorAll("input").forEach(i=>i.value="");
+        }
+        function handleDropdown(select) {
+            if (select.value === "logout") {
+                window.location.href = "login.html";
+        }
+        }
+        window.onload = function () {
+            document.querySelector(".admin select").selectedIndex = 0;
+        };
+    </script>
+</body>
+</html>

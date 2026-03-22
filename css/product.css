@@ -1,0 +1,250 @@
+h2{
+    margin-left: 20px;
+    margin-top: 60px;
+}
+
+.cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    margin-top: -20px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: 1px solid #000;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-header img {
+    width: 20px;
+    height: 20px;
+}
+
+.card p {
+    font-weight: 500;
+    color: gray;
+    margin: 0;
+}
+
+.card h3 {
+    margin-top: 8px;
+}
+
+.form{
+    background: rgb(152, 255, 243);
+    padding:10px;
+    margin-left: 20px;
+    margin-bottom: 2px;
+}
+
+.form input{
+    width:max-content;
+    height:20px;
+    color: #ccc;
+}
+
+.form select{
+    color: #6b6b6b;
+    height:25px;
+    width: 100px;
+    border-color: #7c7c7c;
+}
+
+.table-section {
+    margin-top: 0px;
+}
+
+.table-header {
+    margin-left: 20px;
+    background: #4aa3df;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 15px;
+    border-radius: 8px;
+    margin-bottom: 2px;
+}
+
+.table-header input {
+    align-self: center;
+    height: 20px;
+    width: 250px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-right: 150px;
+}
+
+.table-header select {
+    align-self: center;
+    height: 30px;
+    width: 200px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-right: 150px;
+}
+
+table {
+    margin-left: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #4aa3df;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+tbody tr{
+    background: #f5f7fa;
+}
+
+/* General button */
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+/* Add Product button */
+.add-btn {
+    background: linear-gradient(135deg, #6c5ce7, #4b4bdb);
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.add-btn:hover {
+    background: linear-gradient(135deg, #5a4bd6, #3c3ccf);
+    transform: translateY(-2px);
+}
+
+/* Scan button */
+.scan-btn {
+    background: linear-gradient(135deg, #00b894, #00a383);
+    color: white;
+}
+
+.scan-btn:hover {
+    background: linear-gradient(135deg, #009e7a, #008f6b);
+    transform: scale(1.05);
+}
+
+/* Edit button */
+.edit {
+    background: #f1c40f;
+    color: black;
+}
+
+.edit:hover {
+    background: #d4ac0d;
+}
+
+/* Delete button */
+.delete {
+    background: #e74c3c;
+    color: white;
+}
+
+.delete:hover {
+    background: #c0392b;
+}
+
+/* Action button spacing */
+.action-btn {
+    margin: 2px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.pagination {
+    margin-left: 20px;
+    background-color: #4aa3df;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.pagination span {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background:#4aa3df;
+    cursor: pointer;
+    color: #dfdfdf;
+}
+
+.pagination .num {
+    background: #dfdfdf;
+    color: rgb(0, 0, 0);
+}
+
+.scanner{
+    display: flex;
+    margin-left: 20px;
+    background:rgb(152, 255, 243);
+}
+
+#scanner-container {
+    border: 2px solid #007bff;
+    width: 500px;
+    height: 250px;
+    margin-top: 15px;
+    margin-left: 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Force Quagga’s video and canvas to fit inside the box */
+#scanner-container video,
+#scanner-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+#scan-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 250px;
+    height: 60px;
+    margin-top: 90px;
+    margin-left: 20px;
+    margin-right: 40px;
+}
+
+    #scan-btn:hover {
+      background-color: #218838;
+    }
