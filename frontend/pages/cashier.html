@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cashier.css">
+    <title>Document</title>
+</head>
+<body style="background:rgb(206, 228, 248) ;">
+    <div class="hornav">
+        <ul>
+            <li class="nam">Supermarket Billing System</li>
+            <li class="admin" style="float:right;">
+                <div class="circle"></div>
+                <select onchange="handleDropdown(this)">
+                    <option selected>Admin</option>
+                    <option value="logout">LogOut</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="vernav">
+        <ul>
+            <li><a href="dashboard.html"><div class="imgcont"><img class="img1" src="../image/dash.png"><img class="img2" src="../image/dash2.png"></div>Dashboard</a></li>
+            <li><a href="sales.html"><div class="imgcont"><img class="img1" src="../image/sales.png"><img class="img2" src="../image/sales1.png"></div>Sales Report</a></li>
+            <li><a href="customer.html"><div class="imgcont"><img class="img1" src="../image/cust.png"><img class="img2" src="../image/cust1.png"></div>Customer</a></li>
+            <li><a href="product.html"><div class="imgcont"><img class="img1" src="../image/prod.png"><img class="img2" src="../image/prod1.png"></div>Product</a></li>
+            <li><a class="active" href="cashier.html"><div class="imgcont"><img class="img1" src="../image/cash.png"><img class="img2" src="../image/cash1.png"></div>Cashier Info</a></li>
+        </ul>
+    </div>
+    <div class="workspace">
+        <h2>Cashier Info</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/cashier.png" alt="">
+                    <p>Total Cashier</p>
+                </div>
+                <h3>40</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/activec.png" alt="">
+                    <p>Active Cashier</p>
+                </div>
+                <h3 style="color: rgb(8, 223, 8);">32</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/shiftc.png" alt="">
+                    <p>On Shift</p>
+                </div>
+                <h3>7</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/inactivec.png" alt="">
+                    <p>Inactive Cashier</p>
+                </div>
+                <h3 style="color: red;">8</h3>
+            </div>
+        </div>
+        <div class="table-header">
+                <input type="text" placeholder="Search product...">
+                <select id="category1">
+                    <option value="">All Shift</option>
+                    <option value="Morning">Morning</option>
+                    <option value="Night">Night</option>
+                    <option value="Evening">Evening</option>
+                    <option value="Day">Day</option>
+                    <option value="Afternoon">Afternoon</option>
+                </select>
+
+                <select id="category2">
+                    <option value="">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+                <button class="scan-btn" onclick="addcashier()">Add cashier +</button>
+        </div>
+        <div class="table-section">
+            <h3 style="margin-left: 20px;">Cashier Data</h3>
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <h3 id="form-title">Add Cashier</h3>
+
+                    <input type="text" id="name" placeholder="Name">
+                    <input type="text" id="address" placeholder="Address">
+                    <input type="text" id="phone" placeholder="Phone Number">
+
+                    <select class="form" id="shift">
+                        <option value="">Select Shift</option>
+                        <option>Morning</option>
+                        <option>Night</option>
+                        <option>Evening</option>
+                        <option>Day</option>
+                        <option>Afternoon</option>
+                    </select>
+
+                    <select class="form" id="status">
+                        <option value="">Select Status</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+
+                    <button onclick="saveCashier()">Save</button>
+                    <button onclick="closePopup()">Cancel</button>
+                </div>
+            </div>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Cashier ID</th><th>Name</th><th>Address</th><th>Phone Number</th><th>Shift</th><th>Status</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="pagination">
+                <span>&lt;</span>
+                <span class="num">1</span>
+                <span class="num">2</span>
+                <span class="num">3</span>
+                <span>&gt;</span>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script>
+        let cashiers = [];
+        let editIndex = -1;
+
+        // Open popup
+        function addcashier() {
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("form-title").innerText = "Add Cashier";
+            clearForm();
+            editIndex = -1;
+        }
+
+        // Close popup
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // Clear form
+        function clearForm() {
+            document.getElementById("name").value = "";
+            document.getElementById("address").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("shift").value = "";
+            document.getElementById("status").value = "";
+        }
+
+        // Save cashier (Add + Update)
+        function saveCashier() {
+            let name = document.getElementById("name").value;
+            let address = document.getElementById("address").value;
+            let phone = document.getElementById("phone").value;
+            let shift = document.getElementById("shift").value;
+            let status = document.getElementById("status").value;
+
+            if (!name || !phone) {
+                alert("Please fill required fields");
+                return;
+            }
+
+            let cashier = {
+                id: editIndex === -1 ? Date.now() : cashiers[editIndex].id,
+                name,
+                address,
+                phone,
+                shift,
+                status
+            };
+
+            if (editIndex === -1) {
+                cashiers.push(cashier);
+            } else {
+                cashiers[editIndex] = cashier;
+            }
+
+            closePopup();
+            renderTable();
+        }
+
+        // Render table
+        function renderTable() {
+            let tbody = document.querySelector("#table tbody");
+            tbody.innerHTML = "";
+
+            cashiers.forEach((c, index) => {
+
+                let statusClass = c.status === "Active" ? "active-status" : "inactive-status";
+
+                let row = `
+                    <tr>
+                        <td>${c.id}</td>
+                        <td>${c.name}</td>
+                        <td>${c.address}</td>
+                        <td>${c.phone}</td>
+                        <td>${c.shift}</td>
+                        <td><span class="${statusClass}">${c.status}</span></td>
+                        <td>
+                            <button class="edit-btn" onclick="editCashier(${index})">Edit</button>
+                            <button class="delete-btn" onclick="deleteCashier(${index})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Delete cashier
+        function deleteCashier(index) {
+            if (confirm("Are you sure?")) {
+                cashiers.splice(index, 1);
+                renderTable();
+            }
+        }
+
+        // Edit cashier
+        function editCashier(index) {
+            let c = cashiers[index];
+
+            document.getElementById("name").value = c.name;
+            document.getElementById("address").value = c.address;
+            document.getElementById("phone").value = c.phone;
+            document.getElementById("shift").value = c.shift;
+            document.getElementById("status").value = c.status;
+
+            editIndex = index;
+
+            document.getElementById("form-title").innerText = "Update Cashier";
+            document.getElementById("popup").style.display = "block";
+        }
+        function handleDropdown(select) {
+            if (select.value === "logout") {
+                window.location.href = "login.html";
+        }
+        }
+        window.onload = function () {
+            document.querySelector(".admin select").selectedIndex = 0;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+h2{
+    margin-left: 20px;
+    margin-top: 60px;
+}
+
+.cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    margin-top: -20px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: 1px solid #000;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-header img {
+    width: 20px;
+    height: 20px;
+}
+
+.card p {
+    font-weight: 500;
+    color: gray;
+    margin: 0;
+}
+
+.card h3 {
+    margin-top: 8px;
+}
+
+select{
+    color: #6b6b6b;
+    height:25px;
+    width: 100px;
+    border-color: #7c7c7c;
+}
+
+.table-section {
+    padding-top: 3px;
+    margin-right: 20px;
+    background: white;
+    margin-left: 20px;
+    margin-top: 0px;
+}
+
+.table-header {
+    margin-right:20px ;
+    margin-top: -20px;
+    margin-left: 20px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 15px;
+    margin-bottom: 2px;
+    height: 50px;
+}
+
+.table-header input {
+    align-self: center;
+    height: 20px;
+    width: 250px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.table-header select {
+    align-self: center;
+    height: 30px;
+    width: 250px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+
+}
+
+table {
+    margin-left: 20px;
+    width: 97%;
+    border-collapse: collapse;
+}
+
+thead {
+    margin-right: 20px;
+    border-radius: 6px;
+    background: #4aa3df;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+tbody tr{
+    background: #ffffff;
+}
+
+.pagination {
+    background-color: #4aa3df;
+    text-align: center;
+}
+
+.pagination span {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background:#4aa3df;
+    cursor: pointer;
+    color: #dfdfdf;
+}
+
+.pagination .num {
+    background: #dfdfdf;
+    color: rgb(0, 0, 0);
+}
+
+/* Overlay */
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+
+/* Popup Box */
+.popup-content {
+    background: #ffffff;
+    width: 350px;
+    margin: 80px auto;
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: slideDown 0.3s ease;
+}
+
+/* Title */
+.popup-content h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Inputs */
+.popup-content input,
+.popup-content select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.2s;
+}
+.form{
+    width: 100%;
+    height: auto;
+}
+
+.popup-content input:focus,
+.popup-content select:focus {
+    border-color: #3c21a6;
+    box-shadow: 0 0 5px rgba(60,33,166,0.3);
+}
+
+/* Buttons */
+.popup-content button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+/* Save button */
+.popup-content button:first-of-type {
+    background: #3c21a6;
+    color: white;
+}
+
+.popup-content button:first-of-type:hover {
+    background: #2b1780;
+    transform: scale(1.05);
+}
+
+/* Cancel button */
+.popup-content button:last-of-type {
+    background: #ccc;
+}
+
+.popup-content button:last-of-type:hover {
+    background: #999;
+    transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideDown {
+    from {transform: translateY(-30px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+.active-status {
+    background: #d4f8d4;
+    color: green;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.inactive-status {
+    background: #ffd6d6;
+    color: red;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* Add Cashier Button */
+.scan-btn {
+    background: #3c21a6;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-right: 50px;
+    height: 30px;
+    align-self: center;
+    align-content: center;
+    width: 150px;
+}
+
+.scan-btn:hover {
+    background: #2b1780;
+    transform: scale(1.05);
+}
+
+/* Edit Button */
+.edit-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.2s;
+}
+
+.edit-btn:hover {
+    background: #388e3c;
+    transform: scale(1.1);
+}
+
+/* Delete Button */
+.delete-btn {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.delete-btn:hover {
+    background: #b71c1c;
+    transform: scale(1.1);
+}
