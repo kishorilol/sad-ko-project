@@ -1,5 +1,6 @@
 package com.spring.smbs.smbs.controller;
 
+import com.spring.smbs.smbs.DTO.Request.CustomerRegistrationRequest;
 import com.spring.smbs.smbs.DTO.Response.CustomerDetailsForBillProcessingResponse;
 import com.spring.smbs.smbs.model.Customer;
 import com.spring.smbs.smbs.service.CustomerService;
@@ -30,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/addNewCustomer")
-    public ResponseEntity<?> addNewCustomer(@RequestBody Customer customer){
+    public ResponseEntity<?> addNewCustomer(@RequestBody CustomerRegistrationRequest customer){
         if(customer == null){
             return new ResponseEntity<>(customer, HttpStatus.BAD_REQUEST);
         }

@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     //adding products
-    @PostMapping("/product")
+    @PostMapping("/product/addNewProduct")
     public ResponseEntity<?> addProduct(@RequestBody ProductAdditionRequest productAdditionRequest){
         try{
             Product product1 = productsService.addProducts(productAdditionRequest);

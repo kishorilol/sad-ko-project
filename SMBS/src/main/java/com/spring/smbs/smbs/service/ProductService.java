@@ -58,7 +58,7 @@ public class ProductService {
 
         inventoryBatchRepository.save(inventoryBatch);
 
-        return productsRepository.findById(product.getProductId()).get();
+        return productsRepository.findById(product.getId()).get();
     }
 
     //updating products

@@ -15,11 +15,12 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productId;
+    @Column(name = "product_id")
+    private Integer Id;
     private String name;
     @Column(unique = true)
     private String barcode;
-    private float sellingPrice;
+    private Float sellingPrice;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

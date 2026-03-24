@@ -4,8 +4,11 @@ import com.spring.smbs.smbs.model.InventoryBatch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
+@Repository
 public interface InventoryBatchRepository extends JpaRepository<InventoryBatch, Integer>{
     @Query(value = """
        SELECT COUNT(*) FROM (
@@ -28,5 +31,7 @@ public interface InventoryBatchRepository extends JpaRepository<InventoryBatch, 
        ) AS on_stock
        """, nativeQuery = true)
     Integer countHighStockProducts(@Param("threshold") int threshold);
+
+    List<InventoryBatch> findByProductIdAndStockGreaterThanOrderByPurchaseDateAsc(Integer productId, int quantity);
 }
 

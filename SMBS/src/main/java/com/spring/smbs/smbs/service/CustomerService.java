@@ -1,5 +1,6 @@
 package com.spring.smbs.smbs.service;
 
+import com.spring.smbs.smbs.DTO.Request.CustomerRegistrationRequest;
 import com.spring.smbs.smbs.DTO.Response.CustomerDetailsForBillProcessingResponse;
 import com.spring.smbs.smbs.model.Customer;
 import com.spring.smbs.smbs.repository.CustomerRepository;
@@ -15,13 +16,18 @@ public class CustomerService {
         return customerRepository.findByPhone(phone);
     }
 
-    public CustomerDetailsForBillProcessingResponse addAndReturnCustomerDetails(Customer customer){
+    public CustomerDetailsForBillProcessingResponse addAndReturnCustomerDetails(CustomerRegistrationRequest customer){
         Customer existingCustomer = customerRepository.findByPhone(customer.getPhone());
         if(existingCustomer != null){
             throw new RuntimeException("Customer already exists");
         }
 
-        Customer savedCustomer = customerRepository.save(customer);
+        Customer savedCustomer = new Customer();
+        savedCustomer.setName(customer.getName());
+        savedCustomer.setAddress(customer.getAddress());
+        savedCustomer.setPhone(customer.getPhone());
+
+        customerRepository.save(savedCustomer);
 
         CustomerDetailsForBillProcessingResponse customerDetails = new CustomerDetailsForBillProcessingResponse();
         customerDetails.setCustomerId(savedCustomer.getCustomerId());
