@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Supermarket Billing System | Smart POS</title>
+  <script src="../javascript/script.js" defer></script>
+  <!-- QuaggaJS for barcode scanning -->
+  <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+  <link rel="stylesheet" href="../css/cashierdb.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo"> SuperMarket Billing System</div>
+  <div class="cashier-badge">Cashier: <strong id="cashierName">John Carter</strong></div>
+</div>
+
+<div class="pos-container">
+  <!-- LEFT PANEL: Scanner + Product Info -->
+  <div class="panel">
+    <!-- Scanner Card -->
+    <div class="card">
+      <div class="card-header"> Barcode Scanner</div>
+      <div class="scanner-preview">
+        <div id="scannerContainer" style="width:100%; height:180px; background:#000;"></div>
+      </div>
+      <div class="scanner-controls">
+        <button id="startScannerBtn" class="btn btn-primary"> Start Camera</button>
+        <button id="stopScannerBtn" class="btn btn-danger"> Stop Camera</button>
+      </div>
+      <div class="manual-input">
+        <input type="text" id="manualBarcode" placeholder="Enter barcode manually (e.g., 890123)" autocomplete="off">
+        <button id="manualLookupBtn" class="btn btn-primary"> Lookup</button>
+      </div>
+    </div>
+
+    <!-- Product Info Card -->
+    <div class="card">
+      <div class="card-header"> Product Details</div>
+      <div class="info-grid">
+        <div class="info-field"><label>Product ID</label><div class="value" id="dispId">—</div></div>
+        <div class="info-field"><label>Name</label><div class="value" id="dispName">—</div></div>
+        <div class="info-field"><label>Barcode</label><div class="value" id="dispBarcode">—</div></div>
+        <div class="info-field"><label>Price (Rs.)</label><div class="value" id="dispPrice">—</div></div>
+        <div class="info-field"><label>Expiry Date</label><div class="value" id="dispExpiry">—</div></div>
+        <div class="info-field"><label>Stock</label><div class="value" id="dispStock">—</div></div>
+      </div>
+      <div class="qty-row">
+        <label>Quantity:</label>
+        <input type="number" id="productQty" value="1" min="1">
+      </div>
+      <div class="action-buttons">
+        <button id="addToCartBtn" class="btn btn-primary" disabled>Add to Cart</button>
+        <button id="clearProductBtn" class="btn"> Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER PANEL: Cart + Payment + Customer (simplified) -->
+  <div class="panel">
+    <!-- Cart Card -->
+    <div class="card">
+      <div class="card-header"> Current Cart</div>
+      <div style="max-height: 220px; overflow-y: auto;">
+        <table class="cart-table" id="cartTable">
+          <thead>
+            <tr><th>Item</th><th>Qty</th><th>Unit</th><th>Total</th><th></th></tr>
+          </thead>
+          <tbody id="cartBody"></tbody>
+        </table>
+      </div>
+      <div class="cart-summary">
+  <div class="summary-row net"><span>Total Amount:</span><span id="totalAmount">Rs. 0.00</span></div>
+  <div><button id="clearCartBtn" class="btn btn-sm">🗑 Clear Cart</button></div>
+</div>
+    </div>
+
+    <!-- Payment Card - only payment method (no amounts, no paid/change) -->
+    <div class="card">
+      <div class="card-header">Payment Method</div>
+      <div class="payment-methods" id="paymentMethods">
+        <label><input type="radio" name="paymentMethod" value="Cash" checked>  Cash</label>
+        <label><input type="radio" name="paymentMethod" value="Card">  Card</label>
+        <label><input type="radio" name="paymentMethod" value="Digital">  Digital Wallet</label>
+      </div>
+    </div>
+
+    <!-- Customer Card: only phone + fetch, new customer registration (NO customer info display) -->
+    <div class="card">
+      <div class="card-header"> Customer & Bill Generation</div>
+      <div class="customer-row">
+        <input type="text" id="customerPhoneInput" placeholder=" Phone Number (e.g., 98XXXXXXXX)" autocomplete="off">
+        <button id="fetchCustomerBtn" class="btn btn-primary"> Generate / Fetch</button>
+      </div>
+      
+      <!-- New customer registration panel (appears when number not found) -->
+      <div id="newCustomerPanel" style="display:none; margin-top: 12px;">
+        <div class="new-customer-fields">
+          <input type="text" id="newCustName" placeholder="Full Name *" style="width:100%;">
+          <input type="text" id="newCustAddress" placeholder="Address" style="width:100%;">
+          <button id="saveNewCustomerBtn" class="btn btn-success"> Register & Use</button>
+        </div>
+      </div>
+      <div id="addCustomerTrigger" style="margin-top:8px;">
+        <button id="showAddCustomerBtn" class="btn btn-sm"> Register New Customer</button>
+      </div>
+      <!-- No customer details card shown -->
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Bill Preview -->
+  <div class="panel">
+    <div class="card">
+      <div class="card-header"> Bill Preview</div>
+      <div class="bill-preview" id="billPreviewArea">
+        <div class="bill-header">
+          <strong> SUPERMARKET BILL</strong><br>
+          <span id="billIdDisplay">#INV-001</span> | <span id="billDateDisplay"></span><br>
+          Cashier: <span id="billCashier">John Carter</span>
+        </div>
+        <div style="margin:8px 0;"><strong>Customer:</strong> <span id="billCustName">—</span> | <span id="billCustPhone">—</span><br><span id="billCustAddr"></span></div>
+        <table class="bill-items-table" id="billItemsTable">
+          <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+          <tbody id="billItemsBody"></tbody>
+        </table>
+        <div class="bill-totals">
+          <div class="flex-between"><span>Total:</span><span id="billTotalSpan">0.00</span></div>
+          <div class="flex-between"><strong>Net Payable:</strong><strong id="billNetSpan">0.00</strong></div>
+          <div class="flex-between"><span>Payment:</span><span id="billMethodSpan">Cash</span></div>
+        </div>
+        <div class="text-center mt-2">
+          <button id="printBillBtn" class="btn btn-primary"> Print Bill</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
