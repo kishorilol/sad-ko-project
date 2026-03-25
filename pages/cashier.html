@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/cashier.css">
-    <title>Document</title>
+    <title>Cashier Info</title>
 </head>
 <body style="background:rgb(206, 228, 248) ;">
     <div class="hornav">
@@ -14,7 +14,7 @@
             <li class="admin" style="float:right;">
                 <div class="circle"></div>
                 <select onchange="handleDropdown(this)">
-                    <option selected>Admin</option>
+                    <option disabled selected hidden>Admin</option>
                     <option value="logout">LogOut</option>
                 </select>
             </li>
@@ -67,6 +67,7 @@
         <div class="table-header">
                 <input type="text" placeholder="Search product...">
                 <select id="category1">
+                    <option value="" disabled selected hidden>Select Shift</option>
                     <option value="">All Shift</option>
                     <option value="Morning">Morning</option>
                     <option value="Night">Night</option>
@@ -74,8 +75,8 @@
                     <option value="Day">Day</option>
                     <option value="Afternoon">Afternoon</option>
                 </select>
-
                 <select id="category2">
+                    <option value="" disabled selected hidden>Select Status</option>
                     <option value="">All Status</option>
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -93,7 +94,7 @@
                     <input type="text" id="phone" placeholder="Phone Number">
 
                     <select class="form" id="shift">
-                        <option value="">Select Shift</option>
+                        <option value="" disabled selected hidden>Select Shift</option>
                         <option>Morning</option>
                         <option>Night</option>
                         <option>Evening</option>
@@ -102,7 +103,7 @@
                     </select>
 
                     <select class="form" id="status">
-                        <option value="">Select Status</option>
+                        <option value="" disabled selected hidden>Select Status</option>
                         <option>Active</option>
                         <option>Inactive</option>
                     </select>

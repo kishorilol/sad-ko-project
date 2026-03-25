@@ -6,7 +6,7 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/product.css">
-    <title>Document</title>
+    <title>Product</title>
 </head>
 <body style="background:rgb(206, 228, 248) ;">
     <div class="hornav">
@@ -15,7 +15,7 @@
             <li class="admin" style="float:right;">
                 <div class="circle"></div>
                 <select onchange="handleDropdown(this)">
-                    <option selected>Admin</option>
+                    <option disabled selected hidden>Admin</option>
                     <option value="logout">LogOut</option>
                 </select>
             </li>
@@ -73,6 +73,7 @@
             <input type="text" id="barcode" placeholder="Barcode">
             <input type="text" id="name" placeholder="Name">
             <select id="category">
+                <option value="" disabled selected hidden>Category</option>
                 <option>Fruits</option>
                 <option>Dairy</option>
                 <option>Snacks</option>
@@ -88,6 +89,7 @@
             <div class="table-header">
                 <h3>Products Table</h3>
                 <select id="category1">
+                    <option value="" disabled selected hidden>Select Category</option>
                     <option value="">All</option>
                     <option value="">Fruits</option>
                     <option value="">Dairy</option>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/sales.css">
+    <link rel="stylesheet" href="../css/customer.css">
     <title>Sales Report</title>
 </head>
 <body style="background:rgb(206, 228, 248) ;">
@@ -23,84 +23,69 @@
     <div class="vernav">
         <ul>
             <li><a href="dashboard.html"><div class="imgcont"><img class="img1" src="../image/dash.png"><img class="img2" src="../image/dash2.png"></div>Dashboard</a></li>
-            <li><a class="active" href="sales.html"><div class="imgcont"><img class="img1" src="../image/sales.png"><img class="img2" src="../image/sales1.png"></div>Sales Report</a></li>
-            <li><a href="customer.html"><div class="imgcont"><img class="img1" src="../image/cust.png"><img class="img2" src="../image/cust1.png"></div>Customer</a></li>
+            <li><a href="sales.html"><div class="imgcont"><img class="img1" src="../image/sales.png"><img class="img2" src="../image/sales1.png"></div>Sales Report</a></li>
+            <li><a  class="active" href="customer.html"><div class="imgcont"><img class="img1" src="../image/cust.png"><img class="img2" src="../image/cust1.png"></div>Customer</a></li>
             <li><a href="product.html"><div class="imgcont"><img class="img1" src="../image/prod.png"><img class="img2" src="../image/prod1.png"></div>Product</a></li>
             <li><a href="cashier.html"><div class="imgcont"><img class="img1" src="../image/cash.png"><img class="img2" src="../image/cash1.png"></div>Cashier Info</a></li>
         </ul>
     </div>
     <div class="workspace">
-        <h2>Sales Report</h2>
-        <div class="controls">
-                <select>
-                    <option value="" disabled selected hidden>Year</option>
-                    <option>2024</option>
-                    <option>2023</option>
-                    <option>2022</option>
-                </select>
-
-                <button>Generate Report</button>
-        </div>
-
+        <h2>Customer Info</h2>
         <div class="cards">
             <div class="card">
                 <div class="card-header">
-                    <img src="../image/cart.png" alt="">
-                    <p>Total Sales</p>
+                    <img src="../image/cust.png" alt="">
+                    <p>Total Customer</p>
                 </div>
-                <h3>Rs.40,000</h3>
+                <h3>365</h3>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <img src="../image/dollar.png" alt="">
-                    <p>Total Cost</p>
+                    <img src="../image/calender.png" alt="">
+                    <p>Customer Arrived Today</p>
                 </div>
-                <h3>Rs.32,000</h3>
+                <h3>62</h3>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <img src="../image/dollar.png" alt="">
-                    <p>Total Profit</p>
+                    <img src="../image/time.png" alt="">
+                    <p>Regular Customer</p>
                 </div>
-                <h3>Rs.8,000</h3>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <img src="../image/box.png" alt="">
-                    <p>Total Product Sold</p>
-                </div>
-                <h3>472</h3>
+                <h3 style="color: greenyellow;">12</h3>
             </div>
         </div>
 
         <div class="table-section">
             <div class="table-header">
-                <h3>Product Sales Report</h3>
+                <h3 style="align-self: center;">Customers Data</h3>
                 <input type="text" placeholder="Search product...">
+                <select>
+                    <option value="" disabled selected hidden>Select Address</option>
+                    <option value="">All</option>
+                    <option value="">Kathmandu</option>
+                    <option value="">Bhaktapur</option>
+                    <option value="">Lalitpur</option>
+                    <option value="">Others</option>
+                </select>
             </div>
             <table>
                 <thead>
                     <tr>
-                        <th>Product</th>
-                        <th>Bought Quantity</th>
-                        <th>Sold Quantity</th>
-                        <th>Avg Cost Price</th>
-                        <th>Avg Selling Price</th>
-                        <th>Profit/Loss</th>
+                        <th>Cust.ID</th>
+                        <th>Name</th>
+                        <th>Phone No</th>
+                        <th>Address</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td>Apple</td>
-                        <td>123</td>
+                        <td>1</td>
+                        <td>race</td>
                         <td>120</td>
                         <td>Rs.45</td>
-                        <td>Rs.50</td>
-                        <td class="profit">+Rs.465</td>
                     </tr>
 
                     <tr>
@@ -108,8 +93,6 @@
                         <td>124</td>
                         <td>123</td>
                         <td>Rs.47</td>
-                        <td>Rs.50</td>
-                        <td class="profit">+Rs.322</td>
                     </tr>
 
                     <tr>
@@ -117,8 +100,6 @@
                         <td>125</td>
                         <td>120</td>
                         <td>Rs.21</td>
-                        <td>Rs.25</td>
-                        <td class="profit">+Rs.375</td>
                     </tr>
 
                     <tr>
@@ -126,8 +107,6 @@
                         <td>126</td>
                         <td>120</td>
                         <td>Rs.65</td>
-                        <td>Rs.75</td>
-                        <td class="profit">+Rs.810</td>
                     </tr>
 
                     <tr>
@@ -135,8 +114,6 @@
                         <td>130</td>
                         <td>126</td>
                         <td>Rs.89</td>
-                        <td>Rs.100</td>
-                        <td class="profit">+Rs.1030</td>
                     </tr>
                 </tbody>
             </table>
@@ -148,11 +125,6 @@
                 <span class="num">3</span>
                 <span>&gt;</span>
             </div>
-        </div>
-
-        <div class="charts">
-            <div class="chart-box">Profit by Product</div>
-            <div class="chart-box">Profit Trend (yearly)</div>
         </div>
     </div>
 <script>
