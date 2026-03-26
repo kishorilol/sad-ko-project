@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <title>Product</title>
+</head>
+<body style="background:rgb(206, 228, 248) ;">
+    <div class="hornav">
+        <ul>
+            <li class="nam">Supermarket Billing System</li>
+            <li class="admin" style="float:right;">
+                <div class="circle"></div>
+                <select onchange="handleDropdown(this)">
+                    <option disabled selected hidden>Admin</option>
+                    <option value="logout">LogOut</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="vernav">
+        <ul>
+            <li><a class="active" href="dashboard.html"><div class="imgcont"><img class="img1" src="../image/dash.png"><img class="img2" src="../image/dash2.png"></div>Dashboard</a></li>
+            <li><a href="sales.html"><div class="imgcont"><img class="img1" src="../image/sales.png"><img class="img2" src="../image/sales1.png"></div>Sales Report</a></li>
+            <li><a href="customer.html"><div class="imgcont"><img class="img1" src="../image/cust.png"><img class="img2" src="../image/cust1.png"></div>Customer</a></li>
+            <li><a href="product.html"><div class="imgcont"><img class="img1" src="../image/prod.png"><img class="img2" src="../image/prod1.png"></div>Product</a></li>
+            <li><a href="cashier.html"><div class="imgcont"><img class="img1" src="../image/cash.png"><img class="img2" src="../image/cash1.png"></div>Cashier Info</a></li>
+        </ul>
+    </div>
+    <div class="workspace">
+        <h2>Dashboard</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/dollar.png" alt="">
+                    <p>Total Sales</p>
+                </div>
+                <h3>Rs.40,000</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/cust.png" alt="">
+                    <p>Total Customer</p>
+                </div>
+                <h3>365</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/box.png" alt="">
+                    <p>Total Product Sold</p>
+                </div>
+                <h3>472</h3>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="../image/dollar.png" alt="">
+                    <p>Total Profit</p>
+                </div>
+                <h3>Rs.8,000</h3>
+            </div>
+        </div>
+        <div class="db-container">
+            <!-- Sales Overview -->
+            <div class="db-card">
+                <h3 class="db-title">Sales Overview</h3>
+                <div class="db-chart-box">Chart Here</div>
+            </div>
+
+            <!-- Top Products -->
+            <div class="db-card">
+                <h3 class="db-title">Top Selling Products</h3>
+                <ul class="db-product-list">
+                <li class="db-product-item"><span>1. Milk</span><span>200 sold</span></li>
+                <li class="db-product-item"><span>2. Apples</span><span>185 sold</span></li>
+                <li class="db-product-item"><span>3. Drinks</span><span>150 sold</span></li>
+                <li class="db-product-item"><span>4. Bread</span><span>120 sold</span></li>
+                <li class="db-product-item"><span>5. Chips</span><span>80 sold</span></li>
+                </ul>
+            </div>
+
+            <!-- Customer Growth -->
+            <div class="db-card">
+                <h3 class="db-title">Customer Growth</h3>
+                <div class="db-chart-box">Chart Here</div>
+            </div>
+
+            <!-- Active Cashiers -->
+            <div class="db-card">
+                <div class="db-card-head">
+                <h3 class="db-title">Active Cashiers</h3>
+                <span class="db-status-indicator"></span>
+                </div>
+
+                <table class="db-table">
+                <thead>
+                    <tr>
+                    <th>Cashier ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>123</td><td>Ram Sharma</td><td>9747777391</td></tr>
+                    <tr><td>124</td><td>Newaj Baral</td><td>9849011222</td></tr>
+                    <tr><td>125</td><td>Rahul KC</td><td>9736464321</td></tr>
+                    <tr><td>126</td><td>Kabir Dotel</td><td>9862357482</td></tr>
+                    <tr><td>127</td><td>Sabin Shrestha</td><td>9843843954</td></tr>
+                </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function handleDropdown(select) {
+            if (select.value === "logout") {
+                window.location.href = "login.html";
+        }
+        }
+        window.onload = function () {
+            document.querySelector(".admin select").selectedIndex = 0;
+        };
+    </script>
+</body>
+</html>
