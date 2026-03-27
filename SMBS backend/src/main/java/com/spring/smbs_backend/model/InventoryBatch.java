@@ -25,4 +25,6 @@ public class InventoryBatch {
     @JoinColumn(name ="product_id")
     @JsonBackReference
     private Product product;
+
+    private int initialPurchase;
 }

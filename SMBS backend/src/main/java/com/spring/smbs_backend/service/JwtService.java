@@ -20,7 +20,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private String secretKey;
-    
+
     public JwtService(){
         KeyGenerator keyGen = null;
         try{

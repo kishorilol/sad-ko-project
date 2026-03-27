@@ -20,11 +20,10 @@ public interface SalesReportRepository extends JpaRepository<Bill, Integer> {
              FROM bill b
              WHERE YEAR(b.created_at) = :year) AS totalSales,
 
-            (SELECT SUM((bi.selling_price - ib.cost_price) * bi.quantity)
-             FROM bill_items bi
-             JOIN inventory_batch ib ON ib.product_id = bi.product_id
-             JOIN bill b ON b.bill_id = bi.bill_id
-             WHERE YEAR(b.created_at) = :year) AS totalProfit,
+            (SELECT SUM((bi.selling_price - bi.cost_price) * bi.quantity)
+            FROM bill_items bi
+            JOIN bill b ON bi.bill_id = b.bill_id
+            WHERE YEAR(b.created_at) = :year) AS totalProfit,
 
             (SELECT SUM(ib.cost_price * (ib.stock + COALESCE(sold_qty.sold_quantity, 0)))
              FROM inventory_batch ib
@@ -45,19 +44,39 @@ public interface SalesReportRepository extends JpaRepository<Bill, Integer> {
     SalesSummary getSummary(@Param("year") int year);
 
 
-    @Query("""
+    @Query(value = """
     SELECT 
-        p.name as productName,
-        SUM(bi.quantity) as soldQuantity,
-        SUM(bi.sellingPrice * bi.quantity) as totalRevenue,
-        SUM((bi.sellingPrice - bi.costPrice) * bi.quantity) as totalProfit
-    FROM BillItems bi
-    JOIN bi.product p
-    JOIN bi.bill b
-    WHERE YEAR(b.createdAt) = :year
-    GROUP BY p.name
-    """)
-    List<ProductSales> getProductSales(int year);
+        p.name AS productName,
+        COALESCE(sold.soldQuantity, 0) AS soldQuantity,
+        COALESCE(bought.purchasedQuantity, 0) AS boughtQuantity,
+        COALESCE(bought.weightedAvgCostPrice, 0) AS avgCostPrice,
+        COALESCE(sold.weightedAvgSellingPrice, 0) AS avgSellingPrice,
+        COALESCE(sold.totalProfit, 0) AS totalProfit
+    FROM product p
+    LEFT JOIN (
+        SELECT 
+            bi.product_id,
+            SUM(bi.quantity) AS soldQuantity,
+            SUM(bi.quantity * bi.selling_price) / SUM(bi.quantity) AS weightedAvgSellingPrice,
+            SUM((bi.selling_price - bi.cost_price) * bi.quantity) AS totalProfit
+        FROM bill_items bi
+        JOIN bill b ON bi.bill_id = b.bill_id
+        WHERE YEAR(b.created_at) = :year
+        GROUP BY bi.product_id
+    ) sold ON sold.product_id = p.product_id
+    LEFT JOIN (
+        SELECT 
+            ib.product_id,
+            SUM(ib.initial_purchase) AS purchasedQuantity,
+            SUM(ib.initial_purchase * ib.cost_price) / SUM(ib.initial_purchase) AS weightedAvgCostPrice
+        FROM inventory_batch ib
+        WHERE YEAR(ib.purchase_date) = :year
+        GROUP BY ib.product_id
+    ) bought ON bought.product_id = p.product_id
+    WHERE sold.soldQuantity > 0 OR bought.purchasedQuantity > 0
+    ORDER BY p.name
+    """, nativeQuery = true)
+    List<ProductSales> getProductSales(@Param("year") int year);
 
 
     @Query("""

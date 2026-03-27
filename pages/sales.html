@@ -32,7 +32,7 @@
     <div class="workspace">
         <h2>Sales Report</h2>
         <div class="controls">
-                <select>
+                <select id="year">
                     <option value="" disabled selected hidden>Year</option>
                     <option>2024</option>
                     <option>2023</option>
@@ -48,7 +48,7 @@
                     <img src="../image/cart.png" alt="">
                     <p>Total Sales</p>
                 </div>
-                <h3>Rs.40,000</h3>
+                <h3 class="total-sales">1</h3>
             </div>
 
             <div class="card">
@@ -56,7 +56,7 @@
                     <img src="../image/dollar.png" alt="">
                     <p>Total Cost</p>
                 </div>
-                <h3>Rs.32,000</h3>
+                <h3 class="total-cost">1</h3>
             </div>
 
             <div class="card">
@@ -64,7 +64,7 @@
                     <img src="../image/dollar.png" alt="">
                     <p>Total Profit</p>
                 </div>
-                <h3>Rs.8,000</h3>
+                <h3 class="total-profit">1</h3>
             </div>
 
             <div class="card">
@@ -72,7 +72,7 @@
                     <img src="../image/box.png" alt="">
                     <p>Total Product Sold</p>
                 </div>
-                <h3>472</h3>
+                <h3 class="total-product-sold"></h3>
             </div>
         </div>
 
@@ -81,7 +81,7 @@
                 <h3>Product Sales Report</h3>
                 <input type="text" placeholder="Search product...">
             </div>
-            <table>
+            <table id="table">
                 <thead>
                     <tr>
                         <th>Product</th>
@@ -94,50 +94,6 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>Apple</td>
-                        <td>123</td>
-                        <td>120</td>
-                        <td>Rs.45</td>
-                        <td>Rs.50</td>
-                        <td class="profit">+Rs.465</td>
-                    </tr>
-
-                    <tr>
-                        <td>Milk</td>
-                        <td>124</td>
-                        <td>123</td>
-                        <td>Rs.47</td>
-                        <td>Rs.50</td>
-                        <td class="profit">+Rs.322</td>
-                    </tr>
-
-                    <tr>
-                        <td>Bread</td>
-                        <td>125</td>
-                        <td>120</td>
-                        <td>Rs.21</td>
-                        <td>Rs.25</td>
-                        <td class="profit">+Rs.375</td>
-                    </tr>
-
-                    <tr>
-                        <td>Chips</td>
-                        <td>126</td>
-                        <td>120</td>
-                        <td>Rs.65</td>
-                        <td>Rs.75</td>
-                        <td class="profit">+Rs.810</td>
-                    </tr>
-
-                    <tr>
-                        <td>Drinks</td>
-                        <td>130</td>
-                        <td>126</td>
-                        <td>Rs.89</td>
-                        <td>Rs.100</td>
-                        <td class="profit">+Rs.1030</td>
-                    </tr>
                 </tbody>
             </table>
 
@@ -151,19 +107,15 @@
         </div>
 
         <div class="charts">
-            <div class="chart-box">Profit by Product</div>
-            <div class="chart-box">Profit Trend (yearly)</div>
+            <div class="chart-box">
+                <canvas id="profit-by-category"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="profit-trend"></canvas>
+            </div>
         </div>
     </div>
-<script>
-    function handleDropdown(select) {
-        if (select.value === "logout") {
-            window.location.href = "login.html";
-        }
-    }
-    window.onload = function () {
-        document.querySelector(".admin select").selectedIndex = 0;
-    };
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../javascript/sales.js"></script>
 </body>
 </html>

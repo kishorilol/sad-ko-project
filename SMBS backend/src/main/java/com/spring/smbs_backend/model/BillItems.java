@@ -26,4 +26,6 @@ public class BillItems {
     private float costPrice;
     private float sellingPrice;
 
+    private Integer batch_id;
+
 }

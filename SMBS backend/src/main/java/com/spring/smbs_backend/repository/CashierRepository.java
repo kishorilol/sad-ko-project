@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CashierRepository extends JpaRepository<Cashier, Integer> {
+    Integer countByStatusAndShift(String status, String shift);
     Integer countByStatus(String status);
     Integer countByShift(String shift);
+
 }
 

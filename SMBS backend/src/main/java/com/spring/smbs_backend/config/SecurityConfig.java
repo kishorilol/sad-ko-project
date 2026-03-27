@@ -28,7 +28,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http.csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests(request -> request.requestMatchers("/registerUser", "/login").permitAll()
+                .cors(cors -> {})
+                .authorizeHttpRequests(request -> request.requestMatchers( "/login").permitAll()
                         .requestMatchers("/product/getByCode/**", "/admin/**", "/getCashierById/").hasRole("ADMIN")
                         .requestMatchers("/cashier/**", "/getCashierById/").hasRole("CASHIER").anyRequest().authenticated())
 

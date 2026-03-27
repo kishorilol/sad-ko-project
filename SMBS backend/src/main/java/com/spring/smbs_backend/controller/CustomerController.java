@@ -1,6 +1,7 @@
 package com.spring.smbs_backend.controller;
 
 import com.spring.smbs_backend.DTO.Request.CustomerRegistrationRequest;
+import com.spring.smbs_backend.DTO.Response.CustomerDetailsResponse;
 import com.spring.smbs_backend.DTO.Response.CustomerDetailsForBillProcessingResponse;
 import com.spring.smbs_backend.model.Customer;
 import com.spring.smbs_backend.service.CustomerService;
@@ -37,6 +38,17 @@ public class CustomerController {
         }
         CustomerDetailsForBillProcessingResponse response = customerService.addAndReturnCustomerDetails(customer);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("admin/getAllCustomersAndStats")
+    public ResponseEntity<?> getAllCustomers(){
+        try{
+            CustomerDetailsResponse response = customerService.getAllCustomers();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        catch(Exception e){
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

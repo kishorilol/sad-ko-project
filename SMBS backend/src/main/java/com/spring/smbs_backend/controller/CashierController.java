@@ -36,7 +36,7 @@ public class CashierController {
         return new ResponseEntity<>(cashierService.getActiveCashiersCount(), HttpStatus.OK);
     }
 
-    @GetMapping("/a/getInactiveSize")
+    @GetMapping("/admin/getInactiveSize")
     public ResponseEntity<Integer> getInactiveCashiersSize(){
         return new ResponseEntity<>(cashierService.getInactiveCashiersCount(), HttpStatus.OK);
     }

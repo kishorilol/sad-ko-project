@@ -1,3 +1,5 @@
+import { BASE_URL} from './config.js'
+
 const token = localStorage.getItem("token");
 if(!token){
     window.location.replace("login.html");
@@ -88,10 +90,11 @@ window.handleDropdown = function (select) {
     }
 };
 
-const BASE_URL = "http://localhost:8080";
 
 let cashiers = [];
 let editId = null;
+let currentPage = 1;
+const rowsPerPage = 5;
 
 function getHeaders(){
     const token = localStorage.getItem("token");
@@ -144,9 +147,11 @@ function renderTable() {
     let tbody = document.querySelector("#table tbody");
     tbody.innerHTML = "";
 
-    
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedCashiers = cashiers.slice(start, end);
 
-    cashiers.forEach(cashier => {
+    paginatedCashiers.forEach(cashier => {
         let statusClass = cashier.status.toLowerCase() === "active" ? "active-status" : "inactive-status";
 
 
@@ -166,8 +171,9 @@ function renderTable() {
         `;
 
         tbody.innerHTML +=row;
-    })
+    });
 
+    renderPagination();
     attachEvents();
 }
 
@@ -182,6 +188,54 @@ function attachEvents(){
     });
 }
 
+function renderPagination(){
+    const pagination = document.querySelector(".pagination");
+    pagination.innerHTML = "";
+
+    const pageCount = Math.ceil(cashiers.length/rowsPerPage);
+
+    const prev = document.createElement("span");
+    prev.innerText = "<";
+    prev.classList.add("prev");
+    prev.style.cursor = currentPage === 1? "not-allowed" : "pointer";
+    prev.onclick = () => {
+        if(currentPage>1){
+            currentPage--;
+            renderTable();
+        }
+    };
+    pagination.appendChild(prev);
+
+    for(let i =1; i<=pageCount; i++){
+        const page = document.createElement("span");
+        page.innerText = i;
+        page.classList.add("num");
+
+        if(i === currentPage) page.classList.add("active-page");
+        
+        page.style.cursor = "pointer";
+
+        page.onclick = () =>{
+            currentPage = i;
+            renderTable();
+        };
+
+        pagination.appendChild(page);
+    }
+
+    const next = document.createElement("span");
+    next.innerText= ">";
+    next.classList.add("next");
+    next.style.cursor = currentPage === pageCount ? "not-allowed" : "pointer";
+    next.onclick = () =>{
+        if(currentPage < pageCount){
+            currentPage++;
+            renderTable();
+        }
+    }
+    pagination.appendChild(next);
+        
+}
 
 
 function clearForm(){

@@ -26,6 +26,7 @@ public class InventoryService {
         inventoryBatch.setPurchaseDate(addBatchRequest.getPurchaseDate());
         inventoryBatch.setCostPrice(addBatchRequest.getCostPrice());
         inventoryBatch.setStock(addBatchRequest.getStock());
+        inventoryBatch.setInitialPurchase(addBatchRequest.getStock());
 
         return inventoryBatchRepository.save(inventoryBatch);
     }

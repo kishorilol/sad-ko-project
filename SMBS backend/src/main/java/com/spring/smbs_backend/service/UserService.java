@@ -3,6 +3,7 @@ package com.spring.smbs_backend.service;
 import com.spring.smbs_backend.DTO.Request.LoginRequest;
 import com.spring.smbs_backend.DTO.Response.LoginResponse;
 import com.spring.smbs_backend.model.Cashier;
+import com.spring.smbs_backend.model.MyUserDetails;
 import com.spring.smbs_backend.model.User;
 import com.spring.smbs_backend.repository.CashierRepository;
 import com.spring.smbs_backend.repository.UserRepository;
@@ -32,6 +33,7 @@ public class UserService {
 
     @Autowired
     private CashierRepository cashierRepository;
+
 
     @Transactional
     public User validateAndRegister(User user, Cashier newCashier) {

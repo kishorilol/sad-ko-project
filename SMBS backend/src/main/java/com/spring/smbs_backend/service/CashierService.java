@@ -2,8 +2,10 @@ package com.spring.smbs_backend.service;
 
 import com.spring.smbs_backend.model.Cashier;
 import com.spring.smbs_backend.repository.CashierRepository;
+import com.spring.smbs_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -13,6 +15,8 @@ public class CashierService {
 
     @Autowired
     private CashierRepository cashierRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     //getting cashiers
     public List<Cashier> getAllCashiers(){
@@ -45,9 +49,14 @@ public class CashierService {
         return cashierRepository.save(existingCashier);
     }
 
-    //getting cashiers
+    //deleting cashiers
+    @Transactional
     public void deleteCashier(Integer Id){
+        Cashier cashier = cashierRepository.findById(Id).orElseThrow(()-> new RuntimeException("Cashier not found."));
+
+        Integer userId = cashier.getUserId();
         cashierRepository.deleteById(Id);
+        userRepository.deleteById(userId);
     }
 
 
@@ -68,12 +77,12 @@ public class CashierService {
         LocalTime now = LocalTime.now();
         Integer count;
         if(now.isBefore(LocalTime.of(11,0,0)) && now.isAfter(LocalTime.of(6,0,0))){
-            count = cashierRepository.countByShift("Morning")-cashierRepository.countByStatus("INACTIVE");
+            count = cashierRepository.countByShift("Morning")-cashierRepository.countByStatusAndShift("INACTIVE", "Morning");
         }
-        else if(now.isBefore(LocalTime.of(17,0,0)) && now.isAfter(LocalTime.of(11,0,0)))
-            count = cashierRepository.countByShift("Afternoon")-cashierRepository.countByStatus("INACTIVE");
+        else if(now.isBefore(LocalTime.of(16,0,0)) && now.isAfter(LocalTime.of(11,0,0)))
+            count = cashierRepository.countByShift("Day")-cashierRepository.countByStatusAndShift("INACTIVE", "Day");
         else
-            count = cashierRepository.countByShift("Evening")-cashierRepository.countByStatus("INACTIVE");
+            count = cashierRepository.countByShift("Night")-cashierRepository.countByStatusAndShift("INACTIVE", "Night");
 
         if(count<0){
             return 0;

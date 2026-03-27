@@ -2,14 +2,8 @@ package com.spring.smbs_backend.service;
 
 import com.spring.smbs_backend.DTO.Request.BillProductRequest;
 import com.spring.smbs_backend.DTO.Request.BillRequest;
-import com.spring.smbs_backend.model.Bill;
-import com.spring.smbs_backend.model.BillItems;
-import com.spring.smbs_backend.model.InventoryBatch;
-import com.spring.smbs_backend.model.Product;
-import com.spring.smbs_backend.repository.BillItemRepository;
-import com.spring.smbs_backend.repository.BillRepository;
-import com.spring.smbs_backend.repository.InventoryBatchRepository;
-import com.spring.smbs_backend.repository.ProductRepository;
+import com.spring.smbs_backend.model.*;
+import com.spring.smbs_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +23,8 @@ public class BillService {
     private BillItemRepository billItemRepository;
     @Autowired
     private BillRepository billRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Transactional
     public Bill mainTransaction(BillRequest billRequest) {
@@ -58,6 +54,7 @@ public class BillService {
                 billItem.setQuantity(usedQty);
                 billItem.setCostPrice(batch.getCostPrice());
                 billItem.setSellingPrice(product.getSellingPrice());
+                billItem.setBatch_id(batch.getBatchId());
 
                 batch.setStock(available - usedQty);
                 inventoryBatchRepository.save(batch);
@@ -85,6 +82,11 @@ public class BillService {
         bill.setCreatedAt(LocalDate.now());
 
         Bill savedBill = billRepository.save(bill);
+
+        Customer customer = customerRepository.findById(billRequest.getCustomerId()).orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        customer.setLastVisited(LocalDate.now());
+        customerRepository.save(customer);
 
         for(BillItems billItem : billItems) {
             billItem.setBill(savedBill);
