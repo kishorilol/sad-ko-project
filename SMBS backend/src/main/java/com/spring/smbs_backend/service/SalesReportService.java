@@ -1,9 +1,9 @@
 package com.spring.smbs_backend.service;
 
-import com.spring.smbs_backend.DTO.Response.ProductSales;
-import com.spring.smbs_backend.DTO.Response.SalesReportResponse;
-import com.spring.smbs_backend.DTO.Response.SalesSummary;
-import com.spring.smbs_backend.DTO.Response.YearlyProfit;
+import com.spring.smbs_backend.DTO.Response.SalesReport.ProductSales;
+import com.spring.smbs_backend.DTO.Response.SalesReport.SalesReportResponse;
+import com.spring.smbs_backend.DTO.Response.SalesReport.SalesSummary;
+import com.spring.smbs_backend.DTO.Response.SalesReport.YearlyProfit;
 import com.spring.smbs_backend.repository.SalesReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

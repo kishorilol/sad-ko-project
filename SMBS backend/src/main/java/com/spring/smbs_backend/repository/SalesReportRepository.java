@@ -1,8 +1,8 @@
 package com.spring.smbs_backend.repository;
 
-import com.spring.smbs_backend.DTO.Response.ProductSales;
-import com.spring.smbs_backend.DTO.Response.SalesSummary;
-import com.spring.smbs_backend.DTO.Response.YearlyProfit;
+import com.spring.smbs_backend.DTO.Response.SalesReport.ProductSales;
+import com.spring.smbs_backend.DTO.Response.SalesReport.SalesSummary;
+import com.spring.smbs_backend.DTO.Response.SalesReport.YearlyProfit;
 import com.spring.smbs_backend.model.Bill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

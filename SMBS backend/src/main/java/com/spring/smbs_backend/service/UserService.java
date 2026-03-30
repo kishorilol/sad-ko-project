@@ -1,14 +1,12 @@
 package com.spring.smbs_backend.service;
 
 import com.spring.smbs_backend.DTO.Request.LoginRequest;
-import com.spring.smbs_backend.DTO.Response.LoginResponse;
+import com.spring.smbs_backend.DTO.Response.login.LoginResponse;
 import com.spring.smbs_backend.model.Cashier;
-import com.spring.smbs_backend.model.MyUserDetails;
 import com.spring.smbs_backend.model.User;
 import com.spring.smbs_backend.repository.CashierRepository;
 import com.spring.smbs_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

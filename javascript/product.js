@@ -97,11 +97,25 @@ function startScanner() {
 
     Quagga.onDetected((data) => {
         const code = data.codeResult.code;
-        barcodeInput.value = code;
         stopScanner();
+        fillForm(code);
         scanBtn.textContent = "Scan Barcode";
         isScanning = false;
     });
+}
+
+function fillForm(code){
+    const productName = document.getElementById('name');
+    barcodeInput().value = code;
+
+    for(i=0; i<products.length; i++){
+        if(code === products.barcode){
+            productName.value = products.name;
+            document.getElementById('add-new-product').style.cursor = "not-allowed";
+        }else{
+            document.getElementById('add-new-batch').style.cursor = "not-allowed";
+        }
+    }
 }
 
 function stopScanner() {

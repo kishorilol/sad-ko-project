@@ -44,6 +44,9 @@ h2{
 }
 
 .form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: rgb(152, 255, 243);
     padding:10px;
     margin-left: 20px;
@@ -99,7 +102,7 @@ h2{
 
 table {
     margin-left: 20px;
-    width: 100%;
+    width: 98.4%;
     border-collapse: collapse;
 }
 
@@ -204,9 +207,11 @@ button {
     display: flex;
     margin-left: 20px;
     background:rgb(152, 255, 243);
+    justify-content: space-evenly;
 }
 
 #scanner-container {
+    margin-bottom: 15px;
     border: 2px solid #007bff;
     width: 500px;
     height: 250px;
@@ -289,7 +294,7 @@ button {
     transition: 0.2s;
 }
 .form{
-    width: 100%;
+    width: 97%;
     height: auto;
 }
 
@@ -328,4 +333,9 @@ button {
 .popup-content button:last-of-type:hover {
     background: #999;
     transform: scale(1.05);
+}
+
+#batch-btn{
+    display : block;
+    align-items: center;
 }

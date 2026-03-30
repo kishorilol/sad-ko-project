@@ -1,8 +1,8 @@
 package com.spring.smbs_backend.service;
 
 import com.spring.smbs_backend.DTO.Request.CustomerRegistrationRequest;
-import com.spring.smbs_backend.DTO.Response.CustomerDetailsForBillProcessingResponse;
-import com.spring.smbs_backend.DTO.Response.CustomerDetailsResponse;
+import com.spring.smbs_backend.DTO.Response.BillGeneration.CustomerDetailsForBillProcessingResponse;
+import com.spring.smbs_backend.DTO.Response.CustomerDetails.CustomerDetailsResponse;
 import com.spring.smbs_backend.model.Customer;
 import com.spring.smbs_backend.repository.BillRepository;
 import com.spring.smbs_backend.repository.CustomerRepository;
