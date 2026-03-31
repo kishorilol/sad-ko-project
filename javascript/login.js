@@ -1,4 +1,4 @@
-const BASE_URL = "http://192.168.1.75:8080";
+const BASE_URL = "http://localhost:8080";
 
 async function login() {
   const username = document.querySelector('#username').value;

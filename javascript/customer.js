@@ -2,6 +2,8 @@ import { BASE_URL } from "./config.js";
 
 window.addEventListener("DOMContentLoaded", ()=>{
     getDataFromBackend();
+    document.getElementById("search-input").addEventListener("input", filterData);
+    document.getElementById("address-select").addEventListener("change", filterData);
 })
 
 window.handleDropdown = function(select){
@@ -64,15 +66,15 @@ function loadStats(totalCustomer, customersArrivedToday, regularCustomer){
     }
 }
 
-function renderTable(customers){
+function renderTable(customers) {
     let tableBody = document.querySelector("#table-body");
     tableBody.innerHTML = "";
 
-    const start = (currentPage -1) * rowsPerPage;
+    const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedCustomers = customers.slice(start, end);
 
-    paginatedCustomers.forEach(customer =>{
+    paginatedCustomers.forEach(customer => {
         let row = `
             <tr>
                 <td>${customer.customerId}</td>
@@ -81,57 +83,87 @@ function renderTable(customers){
                 <td>${customer.address}</td>
                 <td>${customer.lastVisited}</td>
             </tr>
-        `
+        `;
         tableBody.innerHTML += row;
-    })
+    });
 
-    renderPagination();
+    renderPagination(customers);
 }
 
-function renderPagination(){
+
+function filterData() {
+    const searchTerm = document.getElementById("search-input").value.toLowerCase();
+    const selectedAddress = document.getElementById("address-select").value;
+
+    const filteredData = data.customers.filter(customer => {
+        const matchesSearchTerm = 
+            customer.name.toLowerCase().includes(searchTerm) || customer.phone.includes(searchTerm);
+        
+        let matchesAddress;
+
+        if (selectedAddress === "all") {
+            matchesAddress = true; // Show all customers
+        } else if (selectedAddress === "others") {
+            matchesAddress = customer.address && customer.address.toLowerCase() !== "kathmandu" &&
+                             customer.address.toLowerCase() !== "bhaktapur" &&
+                             customer.address.toLowerCase() !== "lalitpur";
+        } else {
+            matchesAddress = customer.address.toLowerCase() === selectedAddress.toLowerCase(); // Exact match
+        }
+
+        return matchesSearchTerm && matchesAddress;
+    });
+
+    currentPage = 1;  // Reset to the first page when filtering
+    renderTable(filteredData);
+}
+
+
+
+function renderPagination(customers) {
     const pagination = document.querySelector(".pagination");
     pagination.innerHTML = "";
 
-    const pageCount = Math.ceil(data.customers.length/rowsPerPage);
-
+    const pageCount = Math.ceil(customers.length / rowsPerPage);
+    
+    // Add previous and next buttons
     const prev = document.createElement("span");
     prev.innerText = "<";
     prev.classList.add("prev");
-    prev.style.cursor = currentPage === 1? "not-allowed" : "pointer";
+    prev.style.cursor = currentPage === 1 ? "not-allowed" : "pointer";
     prev.onclick = () => {
-        if(currentPage>1){
+        if (currentPage > 1) {
             currentPage--;
-            renderTable();
+            renderTable(customers);
         }
     };
     pagination.appendChild(prev);
 
-    for(let i =1; i<=pageCount; i++){
+    for (let i = 1; i <= pageCount; i++) {
         const page = document.createElement("span");
         page.innerText = i;
         page.classList.add("num");
 
-        if(i === currentPage) page.classList.add("active-page");
-        
-        page.style.cursor = "pointer";
+        if (i === currentPage) page.classList.add("active-page");
 
-        page.onclick = () =>{
+        page.style.cursor = "pointer";
+        page.onclick = () => {
             currentPage = i;
-            renderTable();
+            renderTable(customers);
         };
 
         pagination.appendChild(page);
     }
 
     const next = document.createElement("span");
-    next.innerText= ">";
+    next.innerText = ">";
     next.classList.add("next");
     next.style.cursor = currentPage === pageCount ? "not-allowed" : "pointer";
-    next.onclick = () =>{
-        if(currentPage < pageCount){
+    next.onclick = () => {
+        if (currentPage < pageCount) {
             currentPage++;
-            renderTable();
+            renderTable(customers);
         }
-    }
+    };
     pagination.appendChild(next);
 }

@@ -11,6 +11,10 @@ window.addEventListener("DOMContentLoaded", ()=>{
     console.log("This is product.js")
     loadTable();
     loadStats();
+    const searchInput = document.getElementById("search-input");
+    searchInput.addEventListener("input", () => {
+        render(); // re-render table on typing
+    })
 })
 
 
@@ -26,7 +30,7 @@ window.closePopup = function(){
 }
 
 let products = [];
-const currentPage = 1;
+let currentPage = 1;
 const rowsPerPage = 5;
 
 let isScanning = false;
@@ -126,44 +130,46 @@ function render(){
     let tbody = document.querySelector("tbody");
     tbody.innerHTML = "";
 
+    const searchValue = document.getElementById("search-input").value.toLowerCase();
+
+    // FILTER PRODUCTS BY NAME
+    const filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(searchValue)
+    );
+
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedProducts = products.slice(start, end);
+    const paginatedProducts = filteredProducts.slice(start, end);
 
-    let status = "Available";
+    paginatedProducts.forEach(product => {
+        let availableStock = 0;
 
-    paginatedProducts.forEach(product=>{
-    let availableStock = 0;
+        product.batches.forEach(batch =>{
+            availableStock += batch.stock;
+        });
 
-    product.batches.forEach(batch =>{
-        availableStock += batch.stock;
-    })
+        let status = product.deleted ? "Unavailable" : "Available";
 
-    if(product.deleted) status = "Unavailable"
-
-    console.log(product);
-
-    let row = `
+        let row = `
         <tr>
             <td>${product.Id}</td>
             <td>${product.name}</td>
             <td>${product.barcode}</td>
             <td>${availableStock}</td>
             <td>${product.sellingPrice}</td>
-            <td>${status}
+            <td>${status}</td>
             <td>
-                <button class = "edit-btn" data-barcode="${product.barcode}">Edit</button>
-                <button class = "delete-btn" data-barcode="${product.barcode}">Delete</button>
+                <button class="edit-btn" data-barcode="${product.barcode}">Edit</button>
+                <button class="delete-btn" data-barcode="${product.barcode}">Delete</button>
             </td>
         </tr>`;
 
         tbody.innerHTML += row;
     });
 
-    renderPagination();
+    renderPagination(filteredProducts.length); // pass filtered length
     attachEvents();
-
-};
+}
 
 function attachEvents(){
     document.querySelectorAll('.edit-btn').forEach(btn =>{
@@ -176,53 +182,66 @@ function attachEvents(){
     });
 }
 
-function renderPagination(){
+function renderPagination(totalItems){
     const pagination = document.querySelector(".pagination");
     pagination.innerHTML = "";
 
-    const pageCount = Math.ceil(products.length/rowsPerPage);
+    const pageCount = Math.ceil(totalItems / rowsPerPage);
 
+    // ✅ PREV BUTTON
     const prev = document.createElement("span");
     prev.innerText = "<";
-    prev.classList.add("prev");
-    prev.style.cursor = currentPage === 1? "not-allowed" : "pointer";
+    prev.classList.add("nav-btn"); // 🔥 ADD CLASS
+
+    if(currentPage === 1){
+        prev.classList.add("disabled");
+    }
+
     prev.onclick = () => {
-        if(currentPage>1){
+        if(currentPage > 1){
             currentPage--;
-            renderTable();
+            render();
         }
     };
+
     pagination.appendChild(prev);
 
-    for(let i =1; i<=pageCount; i++){
+    // ✅ PAGE NUMBERS
+    for(let i = 1; i <= pageCount; i++){
         const page = document.createElement("span");
         page.innerText = i;
-        page.classList.add("num");
 
-        if(i === currentPage) page.classList.add("active-page");
-        
-        page.style.cursor = "pointer";
+        page.classList.add("num"); // 🔥 IMPORTANT (your CSS was here)
 
-        page.onclick = () =>{
+        if(i === currentPage){
+            page.classList.add("active-page"); // 🔥 ACTIVE STYLE
+        }
+
+        page.onclick = () => {
             currentPage = i;
-            renderTable();
+            render();
         };
 
         pagination.appendChild(page);
     }
 
+    // ✅ NEXT BUTTON
     const next = document.createElement("span");
-    next.innerText= ">";
-    next.classList.add("next");
-    next.style.cursor = currentPage === pageCount ? "not-allowed" : "pointer";
-    next.onclick = () =>{
+    next.innerText = ">";
+    next.classList.add("nav-btn"); // 🔥 ADD CLASS
+
+    if(currentPage === pageCount){
+        next.classList.add("disabled");
+    }
+
+    next.onclick = () => {
         if(currentPage < pageCount){
             currentPage++;
-            renderTable();
+            render();
         }
-    }
+    };
+
     pagination.appendChild(next);
-        
 }
 
 async function loadStats(){

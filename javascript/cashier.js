@@ -1,5 +1,7 @@
 import { BASE_URL} from './config.js'
 
+let filteredCashiers = [];
+
 const token = localStorage.getItem("token");
 if(!token){
     window.location.replace("login.html");
@@ -8,6 +10,9 @@ if(!token){
 window.addEventListener("DOMContentLoaded", () => {
     loadCashiers();
     loadStats();
+    document.getElementById("search-input").addEventListener("input", applyFilters);
+    document.getElementById("shift-filter").addEventListener("change", applyFilters);
+    document.getElementById("status-filter").addEventListener("change", applyFilters);
 })
 
 window.addCashier = function() {
@@ -143,13 +148,36 @@ async function loadStats(){
     }
 }
 
+function applyFilters(){
+    const searchValue = document.getElementById("search-input").value.toLowerCase();
+    const shiftValue = document.getElementById("shift-filter").value;
+    const statusValue = document.getElementById("status-filter").value;
+
+    filteredCashiers = cashiers.filter(c => {
+
+        const matchSearch =
+            c.cashierId.toString().includes(searchValue) ||
+            c.name.toLowerCase().includes(searchValue);
+
+        const matchShift = shiftValue === "" || c.shift === shiftValue;
+
+        const matchStatus = statusValue === "" || c.status === statusValue;
+
+        return matchSearch && matchShift && matchStatus;
+    });
+
+    currentPage = 1; // reset page
+    renderTable();
+}
+
 function renderTable() {
     let tbody = document.querySelector("#table tbody");
     tbody.innerHTML = "";
 
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedCashiers = cashiers.slice(start, end);
+    const data = filteredCashiers.length ? filteredCashiers : cashiers;
+    const paginatedCashiers = data.slice(start, end);
 
     paginatedCashiers.forEach(cashier => {
         let statusClass = cashier.status.toLowerCase() === "active" ? "active-status" : "inactive-status";
@@ -192,7 +220,8 @@ function renderPagination(){
     const pagination = document.querySelector(".pagination");
     pagination.innerHTML = "";
 
-    const pageCount = Math.ceil(cashiers.length/rowsPerPage);
+    const data = filteredCashiers.length ? filteredCashiers : cashiers;
+    const pageCount = Math.ceil(data.length / rowsPerPage);
 
     const prev = document.createElement("span");
     prev.innerText = "<";
