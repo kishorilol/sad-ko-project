@@ -1,4 +1,3 @@
-/*
 package com.spring.smbs_backend.config;
 
 import com.spring.smbs_backend.service.MyUserDetailsService;
@@ -56,4 +55,3 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 }
-*/
