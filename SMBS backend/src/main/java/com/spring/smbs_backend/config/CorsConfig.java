@@ -42,7 +42,7 @@ public class CorsConfig {
                     .allowedOrigins(
                         "http://192.168.1.75:5500",
                         "http://127.0.0.1:5500",
-                        "https://sup-bill.netlify.app"
+                        "https://sup-bill.up.railway.app"
                     )
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*")
