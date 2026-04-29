@@ -19,7 +19,7 @@ public class SmbsBackendApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("https://sup-bill.netlify.app")
+                    .allowedOrigins("https://sup-bill.up.railway.app")
                     .allowedMethods("*")
                     .allowedHeaders("*");
                 }
