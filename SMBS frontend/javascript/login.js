@@ -1,4 +1,4 @@
-const BASE_URL = "http://192.168.1.75:8080";
+import { BASE_URL } from "./config.js";
 
 async function login() {
   const username = document.querySelector('#username').value;
@@ -28,3 +28,5 @@ async function login() {
 
   alert("Login success");
 }
+
+document.getElementById('login-btn').addEventListener('click', login);

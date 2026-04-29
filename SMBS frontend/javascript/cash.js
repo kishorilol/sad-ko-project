@@ -2,7 +2,7 @@ import { BASE_URL } from "./config.js";
 
 const token = localStorage.getItem("token");
 if(!token){
-  window.location.replace("/pages/index.html");
+  window.location.replace("/index.html");
 }
 
 window.logout = function(){
@@ -10,7 +10,7 @@ window.logout = function(){
   localStorage.removeItem("role");
   localStorage.removeItem("username");
   localStorage.removeItem("cashierId");
-  window.location.href = "/pages/index.html"
+  window.location.href = "/index.html"
 }
 
   let selectedProduct = null;
