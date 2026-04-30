@@ -17,6 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import org.springframework.core.annotation.Order;
+import org.springframework.core.Ordered;
+
 @Configuration
 public class SecurityConfig {
 
@@ -25,6 +28,12 @@ public class SecurityConfig {
 
     @Autowired
     private JwtFilter jwtFilter;
+
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public CorsFilter corsFilter(CorsConfigurationSource corsConfigurationSource) {
+        return new CorsFilter(corsConfigurationSource);
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
